@@ -10,7 +10,7 @@ jobs:
     env:
       API_BASE_URL: 'http://localhost:3000'
       PORT: 4000
-    
+
     steps:
       - name: Checkout do repositorio
         uses: actions/checkout@v4
@@ -26,11 +26,3 @@ jobs:
 
       - name: Execução dos testes
         run: npx cypress run
-
-
-
-
-
-
-
-    
