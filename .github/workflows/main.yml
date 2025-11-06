@@ -1,39 +1,32 @@
 name: E2E Tests
 
-# triggers
-on: 
-  workflow_dispatch: 
+on:
+  workflow_dispatch:
 
 jobs:
   tests:
+    runs-on: ubuntu-latest
 
-  # config do so (windows, linux....chrome, edge)
-  runs-on: ubuntu-latest
-
-  # variaveis (var. ambiente, chaves de acesso a plataformas, etc ...)
-  env: 
-    API_BASE_URL: 'http://localhost:3000'
-    PORT: 4000
+    env:
+      API_BASE_URL: 'http://localhost:3000'
+      PORT: 4000
     
-  # AÇOES E PASSOS
-  steps:
+    steps:
+      - name: Checkout do repositorio
+        uses: actions/checkout@v4
 
-    # aplicaçoes, projetos
-    -name: Checkout do repositorio
-    uses: actions/checkout@v4
+      - name: Instalando dependencias
+        run: npm install
 
-    # dependencias
-    -name: Instalando dependencias
-    run: npm install
+      - name: Executando o projeto web
+        run: npm run server &
 
-    -name: Executando o projeto web dependencias
-    run: npm run server &
+      - name: Executando servidor mock
+        run: npm run mock-server &
 
-    -name: Executando servidor mock
-    run: npm run mock-server &
+      - name: Execução dos testes
+        run: npx cypress run
 
-    -name: Execução dos testes
-    run: npx cypress run
 
 
 
